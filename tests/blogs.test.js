@@ -1,5 +1,5 @@
 const Page = require("./helpers/page");
-
+const mongoose = require("mongoose");
 let page = null;
 
 beforeEach(async () => {
@@ -76,4 +76,13 @@ describe("User is not logged in", () => {
     const result = await page.get("/api/blogs");
     expect(result).toEqual({ error: "You must log in!" });
   });
+});
+beforeAll((done) => {
+  done();
+});
+
+afterAll((done) => {
+  // Closing the DB connection allows Jest to exit successfully.
+  mongoose.connection.close();
+  done();
 });

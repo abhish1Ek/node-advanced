@@ -1,5 +1,5 @@
 const Page = require("./helpers/page");
-
+const mongoose = require("mongoose");
 let page = null;
 
 beforeEach(async () => {
@@ -28,4 +28,14 @@ test("When signed in shows, logout button", async () => {
   const text = await page.$eval('a[href="/auth/logout"]', (el) => el.innerHTML);
 
   expect(text).toEqual("Logout");
+});
+
+beforeAll((done) => {
+  done();
+});
+
+afterAll((done) => {
+  // Closing the DB connection allows Jest to exit successfully.
+  mongoose.connection.close();
+  done();
 });
